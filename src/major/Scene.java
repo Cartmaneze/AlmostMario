@@ -34,7 +34,6 @@ public class Scene extends JPanel
         this.setFocusable(true);
         this.requestFocusInWindow();
 
-
         chronoEcran.start();
     }
 
