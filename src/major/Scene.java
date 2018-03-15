@@ -28,6 +28,7 @@ public class Scene extends JPanel
         chrono = new Chrono();
         Thread chronoEcran = new Thread(chrono);
 
+
         newLevelNewBegin();
 
         this.setFocusable(true);
