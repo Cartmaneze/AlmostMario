@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_fatboyscout" default="compile.module.fatboyscout">
+  <dirname property="module.fatboyscout.basedir" file="${ant.file.module_fatboyscout}"/>
+  
+  <property name="module.jdk.home.fatboyscout" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.fatboyscout" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.fatboyscout" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.fatboyscout" value="-encoding UTF-8 -source 1.6 ${compiler.args}"/>
+  
+  <property name="fatboyscout.output.dir" value="${module.fatboyscout.basedir}/out/production/FatBoyScout"/>
+  <property name="fatboyscout.testoutput.dir" value="${module.fatboyscout.basedir}/out/test/FatBoyScout"/>
+  
+  <path id="fatboyscout.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="fatboyscout.module.production.classpath">
+    <path refid="${module.jdk.classpath.fatboyscout}"/>
+  </path>
+  
+  <path id="fatboyscout.runtime.production.module.classpath">
+    <pathelement location="${fatboyscout.output.dir}"/>
+  </path>
+  
+  <path id="fatboyscout.module.classpath">
+    <path refid="${module.jdk.classpath.fatboyscout}"/>
+    <pathelement location="${fatboyscout.output.dir}"/>
+  </path>
+  
+  <path id="fatboyscout.runtime.module.classpath">
+    <pathelement location="${fatboyscout.testoutput.dir}"/>
+    <pathelement location="${fatboyscout.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.fatboyscout">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.fatboyscout">
+    <patternset refid="excluded.from.module.fatboyscout"/>
+  </patternset>
+  
+  <path id="fatboyscout.module.sourcepath">
+    <dirset dir="${module.fatboyscout.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.fatboyscout" depends="compile.module.fatboyscout.production,compile.module.fatboyscout.tests" description="Compile module FatBoyScout"/>
+  
+  <target name="compile.module.fatboyscout.production" depends="register.custom.compilers" description="Compile module FatBoyScout; production classes">
+    <mkdir dir="${fatboyscout.output.dir}"/>
+    <javac2 destdir="${fatboyscout.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.fatboyscout}/javac">
+      <compilerarg line="${compiler.args.fatboyscout}"/>
+      <bootclasspath refid="fatboyscout.module.bootclasspath"/>
+      <classpath refid="fatboyscout.module.production.classpath"/>
+      <src refid="fatboyscout.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.fatboyscout"/>
+    </javac2>
+    
+    <copy todir="${fatboyscout.output.dir}">
+      <fileset dir="${module.fatboyscout.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.fatboyscout.tests" depends="register.custom.compilers,compile.module.fatboyscout.production" description="compile module FatBoyScout; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.fatboyscout" description="cleanup module">
+    <delete dir="${fatboyscout.output.dir}"/>
+    <delete dir="${fatboyscout.testoutput.dir}"/>
+  </target>
+</project>

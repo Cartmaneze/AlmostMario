@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="FatBoyScout:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/FatBoyScout_jar</output-path>
+    <root id="archive" name="FatBoyScout.jar">
+      <element id="module-output" name="FatBoyScout" />
+    </root>
+  </artifact>
+</component>
